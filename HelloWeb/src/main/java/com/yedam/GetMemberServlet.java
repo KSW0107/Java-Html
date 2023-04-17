@@ -37,8 +37,10 @@ public class GetMemberServlet extends HttpServlet{
 			+"</td></tr>");
 	  		out.print("</tbody>");
 	  		out.print("</table>");
+	  		out.print("<hr>");
+	  		out.print("<a href=empList>목록으로</a>");
 	  	} else {
-	  		resp.sendRedirect("searchForm.html");
+	  		resp.sendRedirect("employee/searchForm.html");
 	  	}
 		
 	}

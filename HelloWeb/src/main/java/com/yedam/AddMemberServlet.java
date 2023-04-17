@@ -38,7 +38,7 @@ public class AddMemberServlet extends HttpServlet {
 		if(result) {
 			resp.sendRedirect("empList");			
 		}else {
-			resp.sendRedirect("addForm.html");
+			resp.sendRedirect("employee/addForm.html");
 		}
 	}
 	

@@ -33,7 +33,7 @@ public class EmpListServlet extends HttpServlet {
 		out.print("<tbody>");
 		for (Employee emp:list) {
 			System.out.println("eid : " + emp.getEmployeeId() + " ,fName : " + emp.getFirstName()); // 순번도가능 rs.getInt(1)
-			out.print("<tr><td>"+emp.getEmployeeId()
+			out.print("<tr><td><a href='searchMember?id="+emp.getEmployeeId()+"'>"+emp.getEmployeeId()
 			+"</td><td>"+emp.getFirstName()
 			+"</td><td>"+emp.getLastName()
 			+"</td><td>"+emp.getEmail()
