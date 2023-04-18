@@ -63,14 +63,15 @@ public class EmpDAO {
 	// 사원등록
 	public boolean insertEmployee(Employee emp) {
 		try {
-			String sql = "insert into employees(employee_id,first_name,last_name,email,job_id,hire_date) values(employees_seq.nextval,?,?,?,?,?)";
+			String sql = "insert into employees(employee_id,first_name,last_name,email,job_id,hire_date) values(?,?,?,?,?,?)";
 			conn = DAO.getConnenct();
 			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, emp.getFirstName());
-			psmt.setString(2, emp.getLastName());
-			psmt.setString(3, emp.getEmail());
-			psmt.setString(4, emp.getJobId());
-			psmt.setString(5, emp.getHireDate());
+			psmt.setInt(1, emp.getEmployeeId());
+			psmt.setString(2, emp.getFirstName());
+			psmt.setString(3, emp.getLastName());
+			psmt.setString(4, emp.getEmail());
+			psmt.setString(5, emp.getJobId());
+			psmt.setString(6, emp.getHireDate());
 
 			int r = psmt.executeUpdate();
 			System.out.println("처리된 건수 : " + r);
@@ -133,4 +134,34 @@ public class EmpDAO {
 		}
 		return emp;
 	}
+	
+	
+	
+	
+	public boolean modifyMember(Employee emp) {
+		try {
+			String sql = "UPDATE employees SET first_name = ?, last_name = ?, email = ? WHERE employee_id = ?";
+			conn = DAO.getConnenct();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1,emp.getFirstName());
+			psmt.setString(2, emp.getLastName());
+			psmt.setString(3, emp.getEmail());
+			psmt.setInt(4,emp.getEmployeeId());
+			
+			int r = psmt.executeUpdate();
+			
+			if(r>0) {
+				return true;
+			}
+	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close();
+		}
+		return false;
+	}
+	
+	
+	
 }
