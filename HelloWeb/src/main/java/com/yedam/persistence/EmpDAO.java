@@ -134,34 +134,57 @@ public class EmpDAO {
 		}
 		return emp;
 	}
-	
-	
-	
-	
+
 	public boolean modifyMember(Employee emp) {
 		try {
 			String sql = "UPDATE employees SET first_name = ?, last_name = ?, email = ? WHERE employee_id = ?";
 			conn = DAO.getConnenct();
 			psmt = conn.prepareStatement(sql);
-			psmt.setString(1,emp.getFirstName());
+			psmt.setString(1, emp.getFirstName());
 			psmt.setString(2, emp.getLastName());
 			psmt.setString(3, emp.getEmail());
-			psmt.setInt(4,emp.getEmployeeId());
-			
+			psmt.setInt(4, emp.getEmployeeId());
+
 			int r = psmt.executeUpdate();
-			
-			if(r>0) {
+
+			if (r > 0) {
 				return true;
 			}
-	
+
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			close();
 		}
 		return false;
 	}
-	
-	
-	
+
+	// 로그인(사원번호, 이메일)
+	public Employee loginCheck(Employee emp) {
+		conn = DAO.getConnenct();
+		String sql = "SELECT * FROM employees WHERE employee_id=? and email=?";
+
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, emp.getEmployeeId());
+			psmt.setString(2, emp.getEmail());
+			rs = psmt.executeQuery();
+
+			if (rs.next()) {
+				Employee result = new Employee();
+				result.setEmployeeId(rs.getInt("employee_id"));
+				result.setFirstName(rs.getString("first_name"));
+				result.setLastName(rs.getString("last_name"));
+				result.setEmail(rs.getString("email"));
+				result.setJobId(rs.getString("job_id"));
+
+				return result;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return null;
+	}
 }
