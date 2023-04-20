@@ -18,5 +18,7 @@ public interface NoticeMapper {
 	public int updateNotice (NoticeVO vo);
 	public int deleteNotice (int noticeId);
 	public NoticeVO searchNotice(int noticeId);
+	//조회수 증가
+	public int updateCount(int noticeId);
 	
 }

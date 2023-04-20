@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="my"%> <!-- 태그 라이브러리 -->
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!-- 태그 라이브러리 -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,21 +9,20 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<jsp:include page="../main.jsp"></jsp:include> <!-- 해당 페이지 포함헤서 출력 -->
 	
-	<!-- if문 -->
-	<my:if test="${list == null}">
-	<p>${list}</p>
-	</my:if>
-	
-	<!-- for문 -->
-	<my:forEach var="i" begin="1" end="10" step="1" >
-	<p>${i}</p>
-	</my:forEach>
-	
-	<!-- 확장된 for문 -->
-	<my:forEach var="notice" items="${list}">
-	<p>${notice}</p>
-	</my:forEach>
+
+	<table class="table">
+	<thead><tr><th>글번호</th><th>제목</th><th>작성자</th><th>조회수</th></tr></thead>
+		<c:forEach var="notice" items="${list}">
+			<tr>
+				<td><a href="getNotice.do?nid=${notice.noticeId }">${notice.noticeId }</a></td>
+				<td>${notice.noticeTitle }</td>
+				<td>${notice.noticeWriter }</td>
+				<td>${notice.hitCount }</td>
+			</tr>
+		</c:forEach>
+	</table>
+
+
 </body>
 </html>

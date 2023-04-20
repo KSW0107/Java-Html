@@ -23,24 +23,37 @@
 
 
 	<!-- 공지사항관련 -->
-	<select id="noticeList" resultType="notice"> <!-- id=자바파일 메소드이름, result =반환타입(별칭 지정해놓음(batis에서)) -->
-		select * from tbl_notice order by 1 desc <!-- 실행되는 쿼리문 -->
+	<select id="noticeList" resultType="notice">
+		<!-- id=자바파일 메소드이름, result =반환타입(별칭 지정해놓음(batis에서)) -->
+		select * from tbl_notice order by 1 desc
+		<!-- 실행되는 쿼리문 -->
 	</select>
-	<insert id="insertNotice" parameterType="notice"> <!-- paramter = 매개변수 타입  -->
+	<insert id="insertNotice" parameterType="notice">
+		<!-- paramter = 매개변수 타입 -->
 		INSERT INTO tbl_notice
-		(notice_id, notice_writer, notice_title,notice_subject)
+		(notice_id, notice_writer,
+		notice_title,notice_subject,attach_file)
 		VALUES
-		(notice_seq.nextval,#{noticeWriter}, #{noticeTitle}, #{noticeSubject}) <!-- #{} = 변수 -->
+		(notice_seq.nextval,#{noticeWriter},#{noticeTitle},#{noticeSubject},#{attachFile})
+		<!-- #{} = 변수 -->
 	</insert>
 	<update id="updateNotice" parameterType="notice">
 		update tbl_notice
-		set notice_title=#{noticeTitle}, notice_subject=#{noticeSubject}
-		where notice_id=#{noticeId}
+		set
+		notice_title=#{noticeTitle}, notice_subject=#{noticeSubject}
+		where
+		notice_id=#{noticeId}
 	</update>
 	<delete id="deleteNotice" parameterType="int">
-		delete from tbl_notice where notice_id=#{noticeId}
+		delete from tbl_notice
+		where notice_id=#{noticeId}
 	</delete>
-	<select id="searchNotice" resultType="notice" parameterType="int">
+	<select id="searchNotice" resultType="notice"
+		parameterType="int">
 		select * from tbl_notice where notice_id=#{noticeId}
 	</select>
+	<update id="updateCount" parameterType="int">
+	update tbl_notice set hit_count=hit_count+1 where notice_id=#{noticeId}
+	</update>
+	
 </mapper>

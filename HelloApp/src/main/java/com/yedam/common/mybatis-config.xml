@@ -6,6 +6,7 @@
 	<properties resource="com/yedam/common/db.properties"></properties> <!-- 연결정보가 담긴 파일 연결 -->
 	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true" /> <!-- a_b => aB로 변환해줌 -->
+		<setting name="jdbcTypeForNull" value="NULL"/>
 	</settings>
 	<typeAliases> <!-- 별칭 붙혀줌 -->
 		<typeAlias alias="employee" type="com.yedam.domain.Employee" /> 

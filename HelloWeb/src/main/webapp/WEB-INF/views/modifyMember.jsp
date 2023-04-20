@@ -32,8 +32,10 @@
 				<td><input name=email value=<%=result.getEmail()%>></td>
 			</tr>
 			<tr>
-				<td colspan="2"><input type="submit" value="수정"> <input
-					type="button" value="삭제"></td>
+				<td colspan="2">
+				<input type="submit" value="수정"> 
+				<input type="button" value="삭제">
+				</td>
 			</tr>
 		</table>
 	</form>

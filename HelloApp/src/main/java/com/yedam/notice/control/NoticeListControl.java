@@ -22,7 +22,8 @@ public class NoticeListControl implements Control {
 		
 		req.setAttribute("list", list);
 		
-		return "WEB-INF/views/notice/NoticeList.jsp";
+//		return "WEB-INF/views/notice/NoticeList.jsp";
+		return "notice/NoticeList.tiles";
 	}
 
 }
