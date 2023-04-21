@@ -11,6 +11,7 @@
 	<typeAliases> <!-- 별칭 붙혀줌 -->
 		<typeAlias alias="employee" type="com.yedam.domain.Employee" /> 
 		<typeAlias alias="notice" type="com.yedam.notice.domain.NoticeVO" />
+		<typeAlias alias="member" type="com.yedam.member.domain.MemberVO" />
 	</typeAliases>
 	<environments default="development"> <!-- 연결정보파일 사용 -->
 		<environment id="development">
@@ -24,6 +25,7 @@
 		</environment>
 	</environments>
 	<mappers>
-		<mapper resource="com/yedam/notice/mapper/NoticeMapper.xml"/> <!-- NoticeMapper.xml로 연결보냄 -->
+		<mapper resource="com/yedam/notice/mapper/NoticeMapper.xml"/> 
+		<mapper resource="com/yedam/member/mapper/MemberMapper.xml"/><!-- NoticeMapper.xml로 연결보냄 -->
 	</mappers>
 </configuration>

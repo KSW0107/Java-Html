@@ -12,9 +12,14 @@ public class NoticeServiceImpl implements NoticeService {
 	SqlSession session = DataSource.getInstance().openSession(true); //자동커밋
 	NoticeMapper mapper = session.getMapper(NoticeMapper.class);
 	
+//	@Override
+//	public List<NoticeVO> noticeList() {
+//		return mapper.noticeList();
+//	}
+	
 	@Override
-	public List<NoticeVO> noticeList() {
-		return mapper.noticeList();
+	public List<NoticeVO> noticeList(int page) {
+		return mapper.noticeWithPage(page);
 	}
 
 	@Override
@@ -37,6 +42,11 @@ public class NoticeServiceImpl implements NoticeService {
 		//조회수 증가.
 		mapper.updateCount(noticeId);
 		return mapper.searchNotice(noticeId);
+	}
+	
+	@Override
+	public int totalCount() {
+		return mapper.getCount();
 	}
 
 }

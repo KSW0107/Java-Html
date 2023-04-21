@@ -21,10 +21,12 @@ public class GetNoticeControl implements Control {
 		//param: nid
 		
 		String nid = req.getParameter("nid");
+		int page =Integer.parseInt( req.getParameter("page"));
 		
 		NoticeService service = new NoticeServiceImpl(); 
 		NoticeVO vo = service.getNotice(Integer.parseInt(nid));
 		req.setAttribute("noticeInfo", vo);
+		req.setAttribute("pageNum", page);
 		
 		if(vo.getAttachFile()!=null) {
 			String imgPath = req.getServletContext().getRealPath("images"); //서버의 실제주소명

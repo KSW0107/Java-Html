@@ -28,6 +28,17 @@
 		select * from tbl_notice order by 1 desc
 		<!-- 실행되는 쿼리문 -->
 	</select>
+	<!-- 페이지별 조회 -->
+	<select id="noticeWithPage" resultType="notice">
+		<!-- ↓ <가 태그가 아니라 연산자임을 표기 -->
+		<![CDATA[
+		SELECT b.*
+		FROM (SELECT rownum rn , a.*
+		FROM (SELECT * FROM tbl_notice order by 1 desc) a
+		WHERE rownum <= #{page} * 10) b
+		WHERE b.rn > (#{page}-1) * 10
+		]]>
+	</select>
 	<insert id="insertNotice" parameterType="notice">
 		<!-- paramter = 매개변수 타입 -->
 		INSERT INTO tbl_notice
@@ -53,7 +64,11 @@
 		select * from tbl_notice where notice_id=#{noticeId}
 	</select>
 	<update id="updateCount" parameterType="int">
-	update tbl_notice set hit_count=hit_count+1 where notice_id=#{noticeId}
+		update tbl_notice set
+		hit_count=hit_count+1 where notice_id=#{noticeId}
 	</update>
-	
+
+	<select id="getCount" resultType="int">
+		select count(*) from tbl_notice
+	</select>
 </mapper>
