@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!-- DAO와 같은 역할 -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yedam.notice.mapper.ReplyMapper"> <!-- mapper = 인터페이스 파일 부분 -->
+	<select id="replyList" parameterType="int">
+	select * from tbl_reply where notice_id=#{noticeId}
+	order by 1
+	</select>
+	<insert id="insertReply" parameterType="reply">
+		<selectKey keyProperty="replyId" resultType="int" order="BEFORE">
+		select reply_seq.nextval from dual
+		</selectKey>
+		insert into tbl_reply (reply_id, reply, reply_writer, reply_date, notice_id)
+		values(#{replyId}, #{reply}, #{replyWriter}, sysdate, #{noticeId})
+	</insert>
+	<delete id ="removeRelpy" parameterType="int">
+		delete tbl_reply where reply_id =#{replyId} 
+	</delete>
+</mapper>

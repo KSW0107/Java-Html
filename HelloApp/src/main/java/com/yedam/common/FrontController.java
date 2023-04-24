@@ -17,11 +17,14 @@ import com.yedam.member.control.LogoutControl;
 import com.yedam.member.control.ModifyMember;
 import com.yedam.member.control.ModifyMemberForm;
 import com.yedam.notice.control.AddNoticeControl;
+import com.yedam.notice.control.AddReplyControl;
 import com.yedam.notice.control.DeleteNoticeControl;
 import com.yedam.notice.control.GetNoticeControl;
 import com.yedam.notice.control.ModifyNoticeControl;
 import com.yedam.notice.control.NoticeAddForm;
 import com.yedam.notice.control.NoticeListControl;
+import com.yedam.notice.control.RemoveReplyControl;
+import com.yedam.notice.control.ReplyListControl;
 
 public class FrontController extends HttpServlet {
 	String encoding;
@@ -62,6 +65,13 @@ public class FrontController extends HttpServlet {
 		map.put("/modifyMemberForm.do", new ModifyMemberForm());
 		//회원정보수정
 		map.put("/modifyMember.do", new ModifyMember());
+		
+		//댓글관련
+		map.put("/replyList.do", new ReplyListControl());
+		//댓글등록
+		map.put("/addReply.do", new AddReplyControl());
+		//댓글삭제
+		map.put("/removeReply.do", new RemoveReplyControl());
 
 	}
 
@@ -80,6 +90,12 @@ public class FrontController extends HttpServlet {
 
 		if (viewPage.endsWith(".do")) {
 			resp.sendRedirect(viewPage);
+			return;
+		}
+		
+		if(viewPage.endsWith(".json")) {
+			resp.setContentType("text/json;charset=UTF-8");
+			resp.getWriter().print(viewPage.substring(0,viewPage.length()-5));
 			return;
 		}
 
