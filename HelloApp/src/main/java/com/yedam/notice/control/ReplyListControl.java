@@ -17,11 +17,11 @@ public class ReplyListControl implements Control {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String nid = req.getParameter("nid");
+		ReplyService service = new ReplyServiceImpl();
+		List<ReplyVO> list = service.getReplies(Integer.parseInt(nid));
 		//json 데이터 생성
 		//[{"replyId" : 5, "noticeId :"98, ...}...]
-		ReplyService service = new ReplyServiceImpl();
 		String json = "[";
-		List<ReplyVO> list = service.getReplies(Integer.parseInt(nid));
 		for(int i=0;i<list.size();i++) {
 			json += "{\"replyId\":"+list.get(i).getReplyId()+",";
 			json += "\"noticeId\":"+list.get(i).getNoticeId()+",";

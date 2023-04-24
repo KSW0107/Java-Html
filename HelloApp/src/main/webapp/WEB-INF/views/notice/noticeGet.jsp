@@ -80,6 +80,7 @@
 
 
 <script>
+	//댓글 조회
     let showFields = ['replyId', 'replyWriter', 'reply'];
 	let xhtp = new XMLHttpRequest();
 	xhtp.open('get', 'replyList.do?nid=${noticeInfo.noticeId}');
@@ -94,7 +95,7 @@
 	}
 
 	//tr 생성함수 선언
-	function makeTrFunc(reply = {}){
+	function makeTrFunc(reply = {}){ //reply가 object라는 뜻
 		let tr = document.createElement('tr')
 		for(let prop of showFields){
 			let td = document.createElement('td')
@@ -102,16 +103,16 @@
 			tr.append(td);
 		}
 	
+	//댓글 삭제
 	//삭제버튼
 	let btn = document.createElement('button');
 	btn.addEventListener('click', function(e){
-		let rid = btn.parentElement.parentElement.children[0].innerText;
+		let rid = btn.parentElement.parentElement.children[0].innerText; //?
 		//db에서 삭제 후 화면에서 삭제.
 		let xhtp = new XMLHttpRequest();
 		xhtp.open('post', 'removeReply.do');
 		xhtp.setRequestHeader('Content-Type' , 'application/x-www-form-urlencoded');
 		xhtp.send('rid='+rid);
-		
 		xhtp.onload = function () {
 			let result = JSON.parse(xhtp.response);
 			console.log(result);
@@ -137,6 +138,7 @@
 	
 	return tr;
 	}
+	//댓글 등록
 	//등록 버튼 이벤트
 	document.querySelector("#addBtn").addEventListener('click', addReplyFnc);
 	function addReplyFnc(e){
@@ -147,9 +149,9 @@
 			location.href = 'loginForm.do'
 			return;
 		}
-		console.log('click', e.target); //e = 자동으로 넘어가는 매개변수 event 약어
+	/* 	console.log('click', e.target); //e = 자동으로 넘어가는 매개변수 event 약어
 		console.log('reply', document.querySelector("#reply").value)
-		console.log('id', "${info.email}")//댓글 내용
+		console.log('id', "${info.email}")//댓글 내용 */
 		let reply =  document.querySelector("#reply").value;
 		
 		//AJAX 호출
@@ -158,7 +160,7 @@
 		xhtp.setRequestHeader('Content-Type' , 'application/x-www-form-urlencoded'); // key value 형식으로 데이터 넣기
 		xhtp.send('id=${info.email}&reply='+reply+"&notice_id=${noticeInfo.noticeId}"); //post는 send에 데이터 입력
 		xhtp.onload = function() {
-			console.log(xhtp.response); 
+			/* console.log(xhtp.response);  */
 			let result = JSON.parse(xhtp.response);
 			if(result.retCode=='Success'){
 				//값을 활용해 tr 생성
