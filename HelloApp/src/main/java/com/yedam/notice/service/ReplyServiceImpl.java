@@ -11,7 +11,7 @@ import com.yedam.notice.mapper.ReplyMapper;
 
 public class ReplyServiceImpl implements ReplyService{
 
-	SqlSession session = DataSource.getInstance().openSession(true); //자동커밋
+	SqlSession session = DataSource.getInstance().openSession(true); // true = 자동커밋
 	ReplyMapper mapper = session.getMapper(ReplyMapper.class);
 	
 	@Override
@@ -27,6 +27,16 @@ public class ReplyServiceImpl implements ReplyService{
 	@Override
 	public boolean removeReply(int replyId) {
 		return mapper.removeRelpy(replyId)==1;
+	}
+
+	@Override
+	public boolean UpdateReply(ReplyVO vo) {
+		return mapper.updateReply(vo)==1;
+	}
+
+	@Override
+	public ReplyVO getReply(int replyId) {
+		return mapper.getReply(replyId);
 	}
 
 }

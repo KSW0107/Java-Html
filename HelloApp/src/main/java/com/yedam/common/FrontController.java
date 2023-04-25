@@ -21,6 +21,7 @@ import com.yedam.notice.control.AddReplyControl;
 import com.yedam.notice.control.DeleteNoticeControl;
 import com.yedam.notice.control.GetNoticeControl;
 import com.yedam.notice.control.ModifyNoticeControl;
+import com.yedam.notice.control.ModifyReplyControl;
 import com.yedam.notice.control.NoticeAddForm;
 import com.yedam.notice.control.NoticeListControl;
 import com.yedam.notice.control.RemoveReplyControl;
@@ -72,7 +73,12 @@ public class FrontController extends HttpServlet {
 		map.put("/addReply.do", new AddReplyControl());
 		//댓글삭제
 		map.put("/removeReply.do", new RemoveReplyControl());
-
+		//댓글수정
+		map.put("/modifyReply.do", new ModifyReplyControl());
+		
+		//차트행성
+		map.put("/chart.do", new ChartFormControl());
+		map.put("/chartData.do" , new ChartDataControl());
 	}
 
 	@Override
