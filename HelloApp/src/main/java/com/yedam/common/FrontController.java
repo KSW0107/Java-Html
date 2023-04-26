@@ -16,6 +16,9 @@ import com.yedam.member.control.LoginFormControl;
 import com.yedam.member.control.LogoutControl;
 import com.yedam.member.control.ModifyMember;
 import com.yedam.member.control.ModifyMemberForm;
+import com.yedam.member.control.addEventControl;
+import com.yedam.member.control.eventListControl;
+import com.yedam.member.control.removeEventControl;
 import com.yedam.notice.control.AddNoticeControl;
 import com.yedam.notice.control.AddReplyControl;
 import com.yedam.notice.control.DeleteNoticeControl;
@@ -79,6 +82,15 @@ public class FrontController extends HttpServlet {
 		//차트행성
 		map.put("/chart.do", new ChartFormControl());
 		map.put("/chartData.do" , new ChartDataControl());
+		
+		//fullcan
+		map.put("/fullCalendar.do", new FullCalendarControl());
+		//목록 json 형태 data
+		map.put("/eventList.do", new eventListControl());
+		//등록 json 형태 retCode:Success/ Fail
+		map.put("/addEvent.do", new addEventControl());
+		//삭제 json 형태 retCode:Success/ Fail
+		map.put("/removeEvent.do", new removeEventControl());
 	}
 
 	@Override

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<p>진료소 현황 </p>
+	
+	
+	<select id="sido">
+		
+	</select>
+
+	<button id="searchBtn">조회</button>
+
+
+	<table border="1">
+		<thead>
+			<tr>
+				<th>센터ID</th>
+				<th>센터명</th>
+				<th>주소</th>
+				<th>facilityName</th>
+			</tr>
+		</thead>
+		<tbody id="list">
+
+		</tbody>
+	</table>
+
+	<script>
+		let showFields = ['id', 'centerName', 'address', 'facilityName'];
+
+		let url =
+			`https://api.odcloud.kr/api/15077586/v1/centers?page=1&perPage=284&serviceKey=llVQOQ6c%2BaYAnAEQA4%2B%2FfamlAtUUBL0%2FghzvBXmJarcdjq9TDjt1BxFmn%2BHLK6UKQgJ1z9BsfDv%2FVS7YJk%2BEqw%3D%3D`;
+		let list = document.querySelector('#list');
+		let allCenter;
+		fetch(url)
+			.then(resolve => resolve.json())
+			.then(result => {
+				allCenter = result.data; // 조회결과 allCenter(전역변수)에 저장\
+				
+				console.log(result.data); //sido정보 =>  중복된 값을 제거, 새로운 배열에 담기
+				let sidoAry = []; //indexOf => 있으면 index값 반환/ 없으면 -1 반환
+				//sidoAry 배열 반복해서 중복되지않는 sido option태그 생성
+				allCenter.forEach(element => {
+					if(sidoAry.indexOf(element.sido) == -1){
+						sidoAry.push(element.sido)
+					}
+				});
+				console.log(sidoAry);
+
+				let sidoItem = document.getElementById('sido');
+				sidoAry.forEach(sido => {
+					let opt = document.createElement('option');
+					opt.value = sido;
+					opt.innerText = sido;
+					sidoItem.append(opt);
+				})
+
+				allCenter.forEach(element => { //자바스크립트 지원 for문
+					//console.log(element)
+					let searchKey = document.getElementById("sido").value;
+					if (element.sido == searchKey) {
+						list.append(makeRow(element));
+					}
+				});
+			})
+			.catch(error => console.log(error));
+
+		//조회 이벤트
+		// let btn = document.getElementById('#searchBtn');
+		// btn.addEventListener('click', function() {
+		// 	findList(document.getElementById("sido").value);
+		// })
+		document.querySelector('#searchBtn').addEventListener('click' ,function(){
+			let serviceKey = document.getElementById("sido").value;
+			findList(serviceKey);
+		})
+
+		//row 한건 생성
+		function makeRow(center = {}) {
+			let tr = document.createElement('tr');
+			tr.addEventListener('click', function() {
+				location.href = 'map.jsp?lat='+center.lat+"&lng="+center.lng+"&facilityName="+center.facilityName; //페이지 이동
+			});
+			for (let filed of showFields) {
+				let td = document.createElement('td');
+				td.innerText = center[filed];
+				tr.append(td);
+			}
+			return tr;
+		}
+
+		// 시도정보 입력조회
+		function findList(sido = "서울특별시") {
+			list.innerHTML = ''; //재조회할때 기존 정보를 없애기 위해 비우기
+			allCenter.forEach(center => {
+				if (center.sido == sido) {
+					list.append(makeRow(center));
+				}
+			})
+		}
+	</script>
+</body>
+
+</html>

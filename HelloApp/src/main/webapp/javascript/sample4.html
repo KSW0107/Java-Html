@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<p>sample4.html</p>
+	<ul id="list">
+		<li>1, kildong, Hong, 2334</li>
+	</ul>
+	<script>
+		let xht = new XMLHttpRequest(); //비동기 처리 방식
+		xht.open('get', 'MOCK_DATA.json');
+		xht.send();
+		xht.onload = function() {
+			//console.log(JSON.parse(xht.response));
+		}
+		
+		
+		fetch('MOCK_DATA.json') //XMLHttpRequest외의 방법
+		// 성공했을때 함수, 실패했을때 함수 2개가 매개변수
+		.then(function(resolve){ //fetch가 넘겨준 결과값 (없는 page여도 성공으로 판단)
+			//성공 시
+			console.log('success');
+			return resolve.texts(); //text로 리턴
+		},function(){
+			//실패 시
+			console.log('error');
+		} ) 
+		//위 .then 실행 후 나온 값으로 실행
+		.then(function(result){
+			console.log('success', result);
+		}, function(error){
+			console.log('error', error);
+		})
+		
+		fetch('MOCK_DATA.json')
+		//.then(function(resolve){return resolve.text(); })
+		.then(resolve => resolve.json()) //화살표 함수 사용(간단 코드로 변경)), json()(json타입 객체 -> 스크립트 객체로 변환)
+		.then(function(result){
+			console.log(result);
+			for(let i=0;i<result.length;i++){
+				let li = document.createElement('li');
+				li.innerText = result[i].id +', '+result[i].first_name+', '+result[i].last_name+', '+result[i].salary;
+				let ul = document.getElementById('list');
+				ul.append(li);
+			}
+			})
+		.catch(function(error){ console.log(error); }) 
+		//catch = 오류 났을 때 실행되는 함수(실패시 함수 대신 사용)
+	</script>
+</body>
+</html>
