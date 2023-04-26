@@ -4,9 +4,9 @@
 <html>
 
 <head>
-	<meta charset='utf-8' />
-	<script src='/fullcal/dist/index.global.js'></script>
-	<script>
+<meta charset='utf-8' />
+<script src='/fullcal/dist/index.global.js'></script>
+<script>
 		document.addEventListener('DOMContentLoaded', function () {
 			var calendarEl = document.getElementById('calendar');
 			let allEvents = [];
@@ -37,6 +37,7 @@
 						selectable: true,
 						selectMirror: true,
 						select: function (arg) {
+							console.log(arg);
 							var title = prompt('Event Title:');
 
 							//AJAX호출
@@ -70,10 +71,34 @@
 
 							calendar.unselect()
 						},
+						//삭제부분
 						eventClick: function (arg) {
 							if (confirm('Are you sure you want to delete this event?')) {
-								arg.event.remove()
+								
+								console.log(arg.event._def.title);
+								
+								fetch('removeEvent.do', {
+									method: "POST",
+									headers: {
+										'Content-Type': 'application/x-www-form-urlencoded'
+									},
+									body: 'title=' + arg.event._def.title
+									//파라미터 등록
+								})
+								.then(resolve => resolve.json())
+								.then(result => {
+									if (result.retCode == 'Success') {
+										alert('삭제성공');
+										arg.event.remove()
+									}else if(result.retCode == 'Fail'){
+										alert('삭제실패');
+									}
+								})
+								.catch(err => console.log(err))
 							}
+							
+							
+						
 						},
 						editable: true,
 						dayMaxEvents: true, // allow "more" link when too many events
@@ -87,19 +112,19 @@
 				});
 		});
 	</script>
-	<style>
-		body {
-			margin: 40px 10px;
-			padding: 0;
-			font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-			font-size: 14px;
-		}
+<style>
+body {
+	margin: 40px 10px;
+	padding: 0;
+	font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+	font-size: 14px;
+}
 
-		#calendar {
-			max-width: 1100px;
-			margin: 0 auto;
-		}
-	</style>
+#calendar {
+	max-width: 1100px;
+	margin: 0 auto;
+}
+</style>
 </head>
 
 <body>

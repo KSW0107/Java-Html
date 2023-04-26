@@ -12,7 +12,7 @@
 		values (#{title},#{startDate},#{endDate})
 	</insert>
 
-	<delete id="memberByDept" parameterType="event">
+	<delete id="deleteEvent" parameterType="event">
 		delete events where title =#{title} 
 	</delete>
 
