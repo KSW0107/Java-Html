@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <display-name>MyProject</display-name>
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+
+  <listener>
+		<listener-class>org.apache.tiles.extras.complete.CompleteAutoloadTilesListener</listener-class>
+  </listener>  
+  <servlet>
+		<servlet-name>Tiles Dispatch Servlet</servlet-name>
+		<servlet-class>org.apache.tiles.web.util.TilesDispatchServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Tiles Dispatch Servlet</servlet-name>
+		<url-pattern>*.tiles</url-pattern>
+	</servlet-mapping>
+  <servlet>
+		<servlet-name>frontControl</servlet-name><!-- 3. 이름 찾아가기 -->
+		<servlet-class>com.yedam.FrontControl.FrontController</servlet-class><!-- 4. 클래스 실행 -->
+		<init-param>
+			<param-name>enc</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>frontControl</servlet-name> <!-- 2. 이름 실행 -->
+		<url-pattern>*.do</url-pattern> <!-- 1. 해당 요청 시 -->
+		<!-- *도 사용가능 ex) *.do -> a.do, b.do 가능 -->
+	</servlet-mapping>
+</web-app>
