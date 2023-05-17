@@ -215,8 +215,9 @@
 		.then(resolve => resolve.json())
 		.then(result => {
 			allPro = result;
-
 			console.log(allPro)
+
+			let dev = document.getElementsByClassName('py-5')
 
 			for (let i = 0; i < allPro.length; i++) {
 
@@ -251,6 +252,8 @@
 					proPoint[i].firstElementChild.remove();
 				}
 			}
+
+			
 
 		})
 </script>

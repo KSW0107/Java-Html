@@ -15,6 +15,8 @@ import com.yedam.common.Control;
 import com.yedam.prod.control.GetProductControl;
 import com.yedam.prod.control.ProductFormControl;
 import com.yedam.prod.control.ProductListControl;
+import com.yedam.prod.control.ProdunctAddControl;
+import com.yedam.prod.control.ProdunctUploadControl;
 import com.yedam.prod.control.getWithPointControl;
 
 public class FrontController extends HttpServlet{
@@ -39,6 +41,11 @@ public class FrontController extends HttpServlet{
 		map.put("/getProduct.do", new GetProductControl());
 		//별점순 조회
 		map.put("/getWithPoint.do", new getWithPointControl());
+		
+		//ck editor  관련
+		map.put("/productAdd.do", new ProdunctAddControl());
+		//ck editor 이미지 업로드 처리
+		map.put("/prodUpload.do", new ProdunctUploadControl());
 		
 	}
 

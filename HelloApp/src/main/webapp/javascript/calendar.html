@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendar.html</title>
+</head>
+<style>
+  #show {
+    display: block;
+    width: 420px;
+    height: 350px;
+    background-color: beige;
+  }
+
+  #show span {
+    display: inline-block;
+    width: 90px;
+    height: 30px;
+    background-color:brown;
+    color: white;
+    text-align: center;
+    margin-top: 2px;
+    margin-left: 5px;
+  }
+</style>
+
+<body>
+
+  <input type="text" id="words">
+  <button id="del">검색삭제</button>
+  <div id="show">
+  </div>
+  <!-- jsp로 달력 생성 -->
+  <!-- <script src="calendarFun.jsp"></script> -->
+  <!-- <script src="calendarObj.jsp"></script> -->
+  <script>
+    //초기값 60 시작 -> 1초당 -1
+    let sec = 100;
+    let game = setInterval(function () {
+      console.log(--sec)
+      if (document.querySelectorAll('#show span').length == 0) {
+        alert('성공')
+        clearInterval(game);
+      }
+      if (sec == 0 && document.querySelectorAll('#show span').length != 0) {
+        alert('실패')
+        clearInterval(game);
+      }
+
+    }, 1000)
+
+    let words =
+      `Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic, magnam cumque tenetur similique dolore fugit quae. Sequi, architecto sunt. Totam neque a, aut architecto nesciunt officia obcaecati saepe? At, ad?`;
+    let wordArray = words.split(' ');
+    let show = document.getElementById('show')
+    console.log(wordArray)
+    for (let word of wordArray) {
+      let span = document.createElement('span');
+      span.innerText = word;
+      show.append(span)
+    }
+
+    let del = document.getElementById('del');
+    del.addEventListener('click', function () {
+      let spans = document.querySelectorAll('#show span')
+      let words = document.getElementById('words')
+      spans.forEach(span => {
+        if (words.value == span.innerText) {
+          span.remove();
+          words.value = '';
+        } else if (words.value == '') {
+          return;
+        } else {
+          alert('해당하는 문자가 없음')
+          words.value = '';
+        }
+      })
+    })
+
+    let words1 = document.getElementById('words')
+    words1.addEventListener('keydown', function (event) {
+
+      if (event.key == 'Enter') {
+        let spans = document.querySelectorAll('#show span')
+        let words = document.getElementById('words')
+        spans.forEach(span => {
+          if (words.value == span.innerText) {
+            span.remove();
+            words.value = '';
+          } else if (words.value == '') {
+            return;
+          } else {
+            alert('해당하는 문자가 없음')
+            words.value = '';
+          }
+        })
+
+      }
+
+
+    })
+  </script>
+</body>
+
+</html>

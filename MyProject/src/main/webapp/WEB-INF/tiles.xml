@@ -13,6 +13,9 @@
 	<definition name="WILDCARD:*" extends="Myproject">
 		<put-attribute name="body" value="/WEB-INF/views/{1}.jsp"></put-attribute>
 	</definition>
+	<definition name="WILDCARD:*/*" extends="Myproject">
+		<put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp"></put-attribute>
+	</definition>
 
 
 
