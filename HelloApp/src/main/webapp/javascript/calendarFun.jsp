@@ -29,9 +29,9 @@ function getCalendar(month){
   
   tr = document.createElement('tr')
  
-  for (let i=0;i <getFirstDay(month); i++){
-    tr.append(  document.createElement('td')) 
-  }
+  for (let i=0;i < getFirstDay(month); i++){
+    tr.append(document.createElement('td')) 
+  };
   for(let i=1; i<=getLastDay(month);i++){
     //Dom을 활용해서 달력생성
     let td = document.createElement('td')
