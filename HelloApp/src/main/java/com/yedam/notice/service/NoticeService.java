@@ -14,4 +14,7 @@ public interface NoticeService {
 	public NoticeVO getNotice(int noticeId);	
 	public int totalCount();
 	
+	//json
+	public List<NoticeVO> noticeListJson();
+	
 }

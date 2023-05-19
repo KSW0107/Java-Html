@@ -25,7 +25,9 @@
 	<!-- 공지사항관련 -->
 	<select id="noticeList" resultType="notice">
 		<!-- id=자바파일 메소드이름, result =반환타입(별칭 지정해놓음(batis에서)) -->
-		select * from tbl_notice order by 1 desc
+		<![CDATA[
+		select * from tbl_notice where rownum < 10 order by 1 desc
+		]]>
 		<!-- 실행되는 쿼리문 -->
 	</select>
 	<!-- 페이지별 조회 -->
@@ -40,12 +42,11 @@
 		]]>
 	</select>
 	<insert id="insertNotice" parameterType="notice">
-		<!-- paramter = 매개변수 타입 -->
-		INSERT INTO tbl_notice
-		(notice_id, notice_writer,
-		notice_title,notice_subject,attach_file)
-		VALUES
-		(notice_seq.nextval,#{noticeWriter},#{noticeTitle},#{noticeSubject},#{attachFile})
+		<selectKey keyProperty="noticeId" resultType ="int" order="BEFORE">
+			select notice_seq.nextval from dual
+		</selectKey>
+		INSERT INTO tbl_notice (notice_id, notice_writer,notice_title,notice_subject,attach_file)
+		VALUES (#{noticeId},#{noticeWriter},#{noticeTitle},#{noticeSubject},#{attachFile})
 		<!-- #{} = 변수 -->
 	</insert>
 	<update id="updateNotice" parameterType="notice">
