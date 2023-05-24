@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.yedam.ToDoMapper">
+	<select id="todoList">
+		select * from tbl_todo order by 1 asc
+	</select>
+	
+	<insert id="addToDo" parameterType="todo">
+	<selectKey keyProperty="todoNo" resultType ="int" order="BEFORE">
+	select NVL(max(todo_no)+1 ,'1') from tbl_todo
+	</selectKey>
+	insert into tbl_todo
+	values (#{todoNo}, #{todoTitle}, 'N')
+	</insert>
+	
+	<delete id="delToDo" parameterType="int">
+	delete tbl_todo where todo_no = #{todoNo}
+	</delete>
+	
+	<update id="updateToDo" parameterType="todo">
+	<if test="todoStatus == 'Y'">
+	update tbl_todo set todo_status = 'N' where todo_no = #{todoNo}
+	</if>
+	<if test="todoStatus == 'N'">
+	update tbl_todo set todo_status = 'Y' where todo_no = #{todoNo}
+	</if>
+	</update>
+	
+	<select id="getTodo" parameterType="int">
+	select * from tbl_todo where todo_no = #{todoNo}
+	</select>
+</mapper> 

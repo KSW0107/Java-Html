@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!-- 기본 DAO 역할 -->
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<properties resource="com/yedam/db.properties"></properties> <!-- 연결정보가 담긴 파일 연결 -->
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true" /> <!-- a_b => aB로 변환해줌 -->
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
+	<typeAliases> <!-- 별칭 붙혀줌 -->
+		<typeAlias alias="todo" type="com.yedam.ToDoVO" /> 
+	</typeAliases>
+	<environments default="development"> <!-- 연결정보파일 사용 -->
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED"> <!-- 접속갯수제한걸기 -->
+				<property name="driver" value="${driver}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${username}" />
+				<property name="password" value="${password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="com/yedam/ToDoMapper.xml"/> 
+	</mappers>
+</configuration>
