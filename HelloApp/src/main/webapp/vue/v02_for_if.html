@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>v02_if.html</title>
+  <script src="https://unpkg.com/vue@2"></script>
+</head>
+
+<body>
+  <div id="app">
+    <h3>짝수 출력</h3>
+    <ul>
+      <!-- template 태그 브라우저에 표시 되지않음 -->
+      <template v-for="(num, idx) in intArray">
+        <li v-if="idx % 2 == 0">{{num}} - {{idx}}</li>
+        <li v-else>짝수번째 입니다</li>
+      </template>
+    </ul>
+    <template>
+      <div>
+        <p>Hello</p>
+      </div>
+    </template>
+  </div>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        intArray: [1, 2, 3, 4, 5, 6]
+      }
+    })
+  </script>
+
+  <div id="app2">
+    <h3>이벤트를 통한 출력</h3>
+    <ul>
+      <li v-for="num in intArray">{{num}}</li>
+    </ul>
+    <button v-on:click="showEven">짝수출력</button>
+    <button v-on:click="orderDesc">내림차순정렬</button>
+  </div>
+  <script>
+    new Vue({
+      el: '#app2',
+      data: {
+        intArray: [1, 2, 3, 4, 5, 6]
+      },
+      methods: {
+        showEven: function () {
+          //filter를 통해 t조건이 true 일때의 값만 배열에 넣어서 새로운 배열 생성
+          let newAry = this.intArray.filter(function (num, idx, arr) {
+            return num % 2 == 0;
+          })
+          this.intArray = newAry;
+        },
+        orderDesc: function (){
+          this.intArray = this.intArray.reverse()
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

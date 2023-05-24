@@ -67,7 +67,7 @@ $(document).ready(function() {
 		}
 	})
 
-	//modal창 이미지 클릭 시 이미지 수정 가능
+	//modal 창 이미지 클릭 시 이미지 수정 가능
 	$('img.nAttach').on('click', function(){
 		$('#attachFile').click(); // trigger event. (강제로 이벤트 실행)
 	})
@@ -90,15 +90,41 @@ $(document).ready(function() {
 			contentType: false,
 			processData: false,
 			error:function(){
-				
+				console.error(err);
 			},
-			success: function(){
+			success: function(result){
+				console.log(result)
+				//이미지 변경
+				$('img.nAttach').attr('src','images/'+result.attachFile);
 				
 			}
 		});
 
 	})
+	//modal 창의 수정 버튼 클릭 (div modal-body 클래스 안의 button)
+	$('div.modal-body button').on('click',function(e){
+		let id = $('div.modal-body td.nid').text();
+		let title = $('div.modal-body td.nTitle').text();
+		let subject = $('div.modal-body textarea.nSubject').val();
 
+		$.ajax({
+			url : 'modifyNoticeJson.do',
+			method : 'post',
+			data : {id : id, title : title, subject: subject},
+			error : function(){
+				
+			},
+			success : function(result){
+				if(result.retCode == 'Success'){
+					console.log(result.retVal);
+					$('#tr_'+result.retVal.noticeId).find('img').attr('src','images/'+result.retVal.attachFile)
+					$('#myModal').hide();
+				} else if(result.retCode == 'Fail'){
+					alert('error 발생')
+				}
+			}
+		});
+	})
 	//등록버튼 클릭
 	$('form').on('submit', function(e) {
 		e.preventDefault(); // submit 기능 차단
@@ -126,6 +152,7 @@ $(document).ready(function() {
 						$('<td />').text(val.noticeWriter),
 						$('<td />').append($('<img>').css('width', '50px').attr('src', 'images/' + val.attachFile)),
 						$('<td />').append($('<button />').text('삭제').on('click', deleteRow)))
+						tr.attr('id', 'tr_'+val.noticeId)
 					$('#noticeList').prepend(tr);
 					$('form')[0].reset(); //폼의 reset 이벤트 호출
 				} else if (data.retCode == 'Fail') {
@@ -158,6 +185,7 @@ $(document).ready(function() {
 					$('<td />').text(notice.noticeWriter),
 					$('<td />').append($('<img>').css('width', '50px').attr('src', 'images/' + notice.attachFile)),
 					$('<td />').append($('<button />').text('삭제').on('click', deleteRow)))
+					tr.attr('id', 'tr_'+notice.noticeId)
 				$('#noticeList').append(tr);
 			});
 

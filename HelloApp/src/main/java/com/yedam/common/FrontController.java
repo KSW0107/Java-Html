@@ -33,6 +33,7 @@ import com.yedam.notice.control.RemoveReplyControl;
 import com.yedam.notice.control.ReplyListControl;
 import com.yedam.notice.control.getNoticeJsonControl;
 import com.yedam.notice.control.modifyNoticeFileControl;
+import com.yedam.notice.control.modifyNoticeJsonControl;
 
 public class FrontController extends HttpServlet {
 	String encoding;
@@ -54,6 +55,8 @@ public class FrontController extends HttpServlet {
 		map.put("/delNoticeJson.do", new NoticeDelJsonControl());
 		map.put("/getNoticeJson.do", new getNoticeJsonControl());
 		map.put("/modifyNoticeFile.do", new modifyNoticeFileControl());
+		map.put("/modifyNoticeJson.do", new modifyNoticeJsonControl());
+		
 		// 공지사항등록 폼
 		map.put("/noticeAddForm.do", new NoticeAddForm());
 		// 공지사항등록

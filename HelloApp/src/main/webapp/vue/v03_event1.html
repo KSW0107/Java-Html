@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>v02_if.html</title>
+  <script src="https://unpkg.com/vue@2"></script>
+</head>
+
+<body>
+  <div class="app">
+    <label>이름</label><input v-model="name">
+    <label>성적</label><input v-model="score">
+    <button v-on:click="saveScore">저장</button>
+    <button v-on:click="orderName">이름순정렬</button>
+    <button v-on:click="orderScore">점수순정렬</button>
+
+    <h3>학생목록</h3>
+    <ul>
+      <li v-for="stu in students">{{stu.name}} - {{stu.score}} <button v-on:click="delStu">삭제</button>
+      </li>
+    </ul>
+  </div>
+
+  <script>
+    new Vue({
+      el: '.app',
+      data: {
+        students : [{name: 'hong', score :70}],
+        name : '',
+        score : ''
+      },
+      methods: {
+        saveScore: function () {
+          this.students.push({name : this.name , score: this.score})
+          this.name = '';
+          this.score = '';
+        },
+        delStu : function(){
+          event.target.parentNode.remove()
+        },
+        orderName : function(){
+          this.student = this.students.sort((a, b) => a.name < b.name ? -1 : 1);
+        },
+        orderScore : function(){
+          this.student = this.students.sort((a, b) => parseInt(a.score) > parseInt(b.score) ? -1 : 1);
+        },
+      }
+    })
+  </script>
+</body>
+
+</html>

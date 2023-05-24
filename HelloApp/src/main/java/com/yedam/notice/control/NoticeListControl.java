@@ -13,8 +13,8 @@ import com.yedam.notice.domain.NoticeVO;
 import com.yedam.notice.service.NoticeService;
 import com.yedam.notice.service.NoticeServiceImpl;
 
-public class NoticeListControl implements Control {
 
+public class NoticeListControl implements Control {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
