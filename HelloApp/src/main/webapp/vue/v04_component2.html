@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>v04_component2.html</title>
+  <script src="https://unpkg.com/vue@2"></script>
+</head>
+
+<body>
+  <div id="app">
+    <my-comp></my-comp>
+    <my-comp></my-comp>
+  </div>
+
+  <script>
+    //전역
+    Vue.component('my-comp', {
+      template: '<button v-on:click="incrementCounter">{{counter}}</button>',
+      methods: {
+        incrementCounter: function () {
+          this.counter++;
+        }
+      },
+      //component 에서는 여러개가 존재할 수 있기 때문에 해당 데이터를 함수 리턴으로 받아옴
+      data: function () {
+        return {
+          counter: 0
+        }
+      }
+    })
+
+    new Vue({
+      el: '#app',
+    })
+  </script>
+  <hr>
+
+  <div id="app2">
+    <p>{{counter}}</p>
+    <button v-on:click="countUp">증가</button>
+    <count-component v-on:child-count="countUp"></count-component>
+  </div>
+  <script>
+    const countComponent = {
+      'count-component': {
+        template: `
+          <div>
+            <button v-on:click="childCountUp">하위요소증가</button>
+          </div>      
+          `,
+        methods: {
+          childCountUp: function () {
+            //사용자 지정 이벤트 호출 구문
+            this.$emit('child-count')
+            //부모요소로 직접 접근도 가능 (비추천)
+            //console.log(this.$parent.counter++)
+          }
+        }
+      }
+    }
+
+    new Vue({
+      el: '#app2',
+      data: {
+        counter: 0
+      },
+      methods: {
+        countUp: function () {
+          this.counter++;
+        }
+      },
+      components : countComponent
+    })
+  </script>
+
+</body>
+
+</html>
