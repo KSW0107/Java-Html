@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://unpkg.com/vue@2/dist/vue.js"></script>
+  <script src="https://unpkg.com/vue-router@3/dist/vue-router.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <!-- 방식 1 -->
+    <router-link to="/main">main</router-link>
+    <router-link to="/info/20230531">info</router-link>
+
+    <router-view></router-view>
+  </div>
+</body>
+
+<script>
+  const mainComponent = {
+    template: `<div><h1>메인페이지</h1></div>`
+  }
+
+  const infoComponent = {
+    template: `<div>
+                  <h3>정보페이지</h3>
+                  <p>{{data}}</p>
+                </div>`,
+    props: ['data']
+    // data : function() {
+    //   return {
+    //     info : ''
+    //   }
+    // },
+    // //router path 에서 데이터를 받아오는 방법 but $사용은 설정과 관련있기때문에 사용 비추천
+    // created : function() {
+    //   this.info = this.$router.params.data;
+    // }
+  }
+
+  //router 객체 생성
+  const router = new VueRouter({
+    // routes -> 기본 설정
+    routes: [{
+        path: '/main',
+        component: mainComponent
+      },
+      // 경로에 데이터를 붙혀서 보내는 방식 (data는 임의의 이름) -> props : true = props에 값을 짚어넣겠다 (path 변수명 = props 이름이 동일해야함)
+      {
+        path: '/info/:data',
+        component: infoComponent,
+        props: true
+      },
+      //방식 2
+      {
+        path: '/user/:id/pwd/:pwd',
+        component: {
+          template: `<div>User : {{this.$route.params.id}} <br>
+                       비밀번호 : {{this.$route.params.pwd}} </div>`
+        }
+      }
+    ]
+  })
+
+  let homeApp = new Vue({
+    el: '#app',
+    router: router
+  })
+</script>
+
+<!-- --------------------------------------------------- -->
+<div id="app2">
+  <hr>
+  <!-- 기본 a태그 말고 따로 태그 지정 가능 (+style도 가능) -->
+  <!-- <router-link tag="button" to="/users/erina" style="color: red;">User</router-link> -->
+  <!-- 이름으로 컴포넌트를 불러오는 방식 name:불러오려는 이름 , params:넘기려는 데이터(객체형태) -->
+  <router-link tag="button" v-bind:to="{name : 'user' , params : {username : myName}}">User</router-link>
+  <router-view></router-view>
+</div>
+
+<script>
+  const vueRouter = new VueRouter({
+    mode: 'history',
+    // hash : '#' + 경로 -> 서버에 요청을 보내지 않고 이동 => dafault
+    // history : '#' 제외하고 SPA 구현을 위한 모드, history API 사용 
+    routes: [{
+      path: '/users/:username',
+      //name : 경로말고 이름으로 해당 컴포넌트를 불러올 수 있게 하는 속성 
+      name: 'user',
+      component: {
+        template: `<div>
+                        <p>유저 정보 : {{username}} </p>
+                      </div>`,
+        props: ['username'],
+      },
+      props: true
+    }]
+  })
+
+  let userApp = new Vue({
+    el: '#app2',
+    router: vueRouter,
+    data: function () {
+      return {
+        myName: 'sungwook'
+      }
+    },
+    methods: {
+      changeURL: function () {
+        if (true) {
+          //코드 상에서 router에 있는 경로를 호출하는 방식
+          this.$route.push({
+            name: 'user',
+            params: {
+              username: 'erina'
+            }
+          })
+        } else {
+          this.$route.push()
+        }
+      }
+    }
+  })
+</script>
+
+</html>
